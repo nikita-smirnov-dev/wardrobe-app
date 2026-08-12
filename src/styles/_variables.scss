@@ -1,0 +1,6 @@
+$color-black: #000000;
+$color-white: #ffffff;
+
+$content-width: 1500px;
+$container-offset: 40px;
+$container-width: calc(var(--content-width) + (var(--container-offset) * 2));
