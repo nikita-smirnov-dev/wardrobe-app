@@ -10,6 +10,7 @@
 .page {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
+  font-size: 1rem;
 }
 
 a {
@@ -44,7 +45,7 @@ img {
   appearance: none;
   border: none;
   border-radius: 0;
-  background-color: #fff;
+  background-color: $color-white;
 
   &::-webkit-search-decoration,
   &::-webkit-search-cancel-button,
@@ -58,6 +59,10 @@ img {
   max-width: $container-width;
   padding: 0 $container-offset;
   margin: 0 auto;
+}
+
+.section-offset {
+  padding: 80px 0;
 }
 
 .visually-hidden {

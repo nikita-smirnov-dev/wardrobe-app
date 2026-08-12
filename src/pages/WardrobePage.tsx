@@ -1,9 +1,12 @@
 import type { FC } from 'react';
+import { WardrobeList } from '@/components/WardrobeList';
 
 export const WardrobePage: FC = () => {
   return (
-    <div className="container">
-      <h1>Список вещей</h1>
-    </div>
+    <section className="section-offset">
+      <div className="container">
+        <WardrobeList />
+      </div>
+    </section>
   );
 };

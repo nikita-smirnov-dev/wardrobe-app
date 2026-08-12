@@ -1,0 +1,1 @@
+export { WardrobeCard } from './WardrobeCard';
