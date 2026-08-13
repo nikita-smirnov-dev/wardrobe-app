@@ -19,7 +19,7 @@ export const Button: FC<ButtonProps> = ({
   const variantClass = styles[`button--${variantAction}`];
   return (
     <button
-      className={`${styles.button} ${className}  ${variantClass}`}
+      className={`${styles.button} ${className || ''}  ${variantClass}`}
       onClick={onClick}
       type={type}
     >

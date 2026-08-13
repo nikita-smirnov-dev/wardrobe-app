@@ -3,9 +3,9 @@ import type { ClothingItem } from '../../types/clothingTypes';
 import { WardrobeCard } from '@/UI/WardrobeCard';
 import styles from './WardrobeList.module.scss';
 import { Button } from '@/UI/Button';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const data: ClothingItem[] = [
+export const data: ClothingItem[] = [
   {
     id: '1',
     name: 'Зимний пуховик',
@@ -39,7 +39,9 @@ export const WardrobeList: FC = () => {
       <ul className={`${styles.list} list-reset`}>
         {data.map((item) => (
           <li className={styles.item} key={item.id}>
-            <WardrobeCard wardrobe={item} />
+            <Link to={`/wardrobe/${item.id}`}>
+              <WardrobeCard wardrobe={item} />
+            </Link>
           </li>
         ))}
       </ul>

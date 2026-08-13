@@ -20,6 +20,10 @@ export const AddItemForm: FC = () => {
     formState: { errors },
   } = useForm<IAddItemForm>({
     mode: 'onBlur',
+    defaultValues: {
+      name: '',
+      category: '',
+    },
   });
 
   const onSubmit = (data: IAddItemForm) => {
@@ -53,7 +57,6 @@ export const AddItemForm: FC = () => {
           name="category"
           id="select"
           className={styles.select}
-          required
           defaultValue=""
           onChange={(e) => e.target.blur()}
         >
@@ -65,10 +68,17 @@ export const AddItemForm: FC = () => {
           <option value="accessories">Аксессуары</option>
         </select>
         {errors.category && (
-          <span className={styles.errorText}>{errors.category.message}</span>
+          <span className={styles.error}>{errors.category?.message}</span>
         )}
       </div>
-      <Input className={styles.input} type="date" />
+      <Input
+        className={styles.input}
+        type="date"
+        {...register('addedAt', {
+          required: 'Дата обязательно для заполнения',
+        })}
+        error={errors.addedAt}
+      />
       <Input className={styles.input} type="file" accept="image/*" />
 
       <Button type="submit">Сохранить</Button>

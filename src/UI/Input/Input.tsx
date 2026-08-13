@@ -22,7 +22,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         />
 
         {error?.message && (
-          <span className={styles.errorText}>{error.message}</span>
+          <span className={styles.error}>{error.message}</span>
         )}
       </div>
     );

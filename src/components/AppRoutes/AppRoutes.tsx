@@ -24,7 +24,7 @@ export const router = createBrowserRouter([
         element: <AddItemPage />,
       },
       {
-        path: 'wardrobe/detail',
+        path: 'wardrobe/:id',
         element: <DetailPage />,
       },
     ],

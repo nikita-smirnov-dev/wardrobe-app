@@ -1,0 +1,38 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  width: 500px;
+  object-fit: cover;
+}
+
+.name {
+  margin: 0;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: $color-text-main;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.category {
+  margin: 0 16px 10px 16px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: $color-accent;
+  background-color: #eef5fc;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.date {
+  margin-bottom: 20px;
+  font-size: 0.8rem;
+  color: $color-text-muted;
+}
