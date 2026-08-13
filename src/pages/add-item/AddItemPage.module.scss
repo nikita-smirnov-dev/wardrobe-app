@@ -1,0 +1,13 @@
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.title {
+  margin: 0;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  color: $color-black;
+}

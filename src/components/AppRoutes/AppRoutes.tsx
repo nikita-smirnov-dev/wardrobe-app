@@ -1,8 +1,8 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
-import { WardrobePage } from '@/pages/WardrobePage.tsx';
-import { AddToWardrobePage } from '@/pages/AddToWardrobePage.tsx';
-import { DetailPage } from '@/pages/DetailPage.tsx';
+import { WardrobePage } from '@/pages/wardrobe/WardrobePage';
+import { AddItemPage } from '@/pages/add-item/AddItemPage';
+import { DetailPage } from '@/pages/item-details/DetailPage';
 
 import { MainLayout } from '@/layout/MainLayout.tsx';
 
@@ -21,7 +21,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'wardrobe/add',
-        element: <AddToWardrobePage />,
+        element: <AddItemPage />,
       },
       {
         path: 'wardrobe/detail',

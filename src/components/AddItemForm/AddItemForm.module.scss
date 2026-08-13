@@ -1,0 +1,62 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  width: 100%;
+  max-width: 370px;
+  background-color: $color-white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid $color-border;
+}
+
+.selectWrapper {
+  position: relative;
+  width: 100%;
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #666;
+    transform: translateY(-50%);
+    transition:
+      transform 0.2s ease,
+      border-top-color 0.2s ease;
+    pointer-events: none;
+  }
+
+  &:focus-within::after {
+    transform: translateY(-50%) rotate(180deg);
+    border-top-color: $color-accent;
+  }
+}
+
+.select {
+  width: 100%;
+  padding: 10px 40px 10px 12px;
+  font-size: 1rem;
+  border: 1px solid $color-border;
+  border-radius: 6px;
+  background-color: $color-white;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+  }
+
+  &:hover {
+    border-color: $color-accent;
+  }
+}
