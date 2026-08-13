@@ -2,8 +2,10 @@ import type { FC } from 'react';
 import { Input } from '@/UI/Input';
 import styles from './AddItemForm.module.scss';
 import { Button } from '@/UI/Button';
-import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { fetchAddClothingItem } from '@/store/wardrobeSlice';
+import { useNavigate } from 'react-router-dom';
 
 interface IAddItemForm {
   name: string;
@@ -14,6 +16,8 @@ interface IAddItemForm {
 
 export const AddItemForm: FC = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { isLoading, error } = useAppSelector((state) => state.wardrobe);
   const {
     register,
     handleSubmit,
@@ -26,18 +30,13 @@ export const AddItemForm: FC = () => {
     },
   });
 
-  const onSubmit = (data: IAddItemForm) => {
-    console.log('Данные формы успешно собраны:', data);
-    setTimeout(() => {
-      const isError = Math.random() < 0.1;
-
-      if (isError) {
-        alert('Ошибка сервера!');
-      } else {
-        alert('Успех! Форма валидна');
-        navigate('/wardrobe');
-      }
-    }, 1500);
+  const onSubmit = async (data: IAddItemForm) => {
+    try {
+      await dispatch(fetchAddClothingItem(data)).unwrap();
+      navigate('/wardrobe');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -81,7 +80,9 @@ export const AddItemForm: FC = () => {
       />
       <Input className={styles.input} type="file" accept="image/*" />
 
-      <Button type="submit">Сохранить</Button>
+      <Button type="submit" isLoading={isLoading}>
+        {isLoading ? 'Сохранение...' : 'Сохранить'}
+      </Button>
     </form>
   );
 };

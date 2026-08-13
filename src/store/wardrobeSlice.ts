@@ -1,8 +1,17 @@
 import { type ClothingItem } from '@/types/clothingTypes';
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 interface WardrobeState {
   list: ClothingItem[];
+  isLoading: boolean;
+  error: string | null;
+}
+
+interface IAddItemForm {
+  name: string;
+  category: string;
+  addedAt: string;
+  image: FileList;
 }
 
 const initialState: WardrobeState = {
@@ -31,7 +40,32 @@ const initialState: WardrobeState = {
         'https://storage-cdn10.gloria-jeans.ru/pictures/Cernye-solncezasitnye-ocki-klabmastery_BAS005477-1_01_2000Wx2000H.jpeg?q=568321',
     },
   ],
+  isLoading: false,
+  error: null,
 };
+
+export const fetchAddClothingItem = createAsyncThunk(
+  'wardrobe/fetchAddClothingItem',
+  async (data: IAddItemForm, thunkAPI) => {
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    const isError = Math.random() < 0.1;
+
+    if (isError) {
+      return thunkAPI.rejectWithValue('Текст ошибки');
+    } else {
+      const newClothingItem: ClothingItem = {
+        id: crypto.randomUUID(),
+        name: data.name,
+        category: data.category,
+        addedAt: data.addedAt,
+        imageUrl:
+          'https://storage-cdn10.gloria-jeans.ru/pictures/Cernye-solncezasitnye-ocki-klabmastery_BAS005477-1_01_2000Wx2000H.jpeg?q=568321',
+      };
+
+      return newClothingItem;
+    }
+  },
+);
 
 const wardrobeSlice = createSlice({
   name: 'wardrobe',
@@ -46,6 +80,20 @@ const wardrobeSlice = createSlice({
         list: state.list.filter((item) => item.id !== action.payload),
       };
     },
+  },
+
+  extraReducers: (builder) => {
+    builder.addCase(fetchAddClothingItem.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(fetchAddClothingItem.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.list.push(action.payload);
+    });
+    builder.addCase(fetchAddClothingItem.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload as string;
+    });
   },
 });
 

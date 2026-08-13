@@ -2,6 +2,8 @@ import type { FC } from 'react';
 import styles from './Button.module.scss';
 
 interface ButtonProps {
+  isLoading?: boolean;
+  isDisabled?: boolean;
   className?: string;
   children: React.ReactNode;
   onClick?: VoidFunction;
@@ -10,6 +12,8 @@ interface ButtonProps {
 }
 
 export const Button: FC<ButtonProps> = ({
+  isLoading,
+  isDisabled = isLoading,
   children,
   className = '',
   onClick,
@@ -21,6 +25,7 @@ export const Button: FC<ButtonProps> = ({
     <button
       className={`${styles.button} ${className || ''}  ${variantClass}`}
       onClick={onClick}
+      disabled={isDisabled}
       type={type}
     >
       {children}
