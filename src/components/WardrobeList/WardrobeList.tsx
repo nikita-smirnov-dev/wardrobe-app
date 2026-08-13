@@ -2,6 +2,8 @@ import type { FC } from 'react';
 import type { ClothingItem } from '../../types/clothingTypes';
 import { WardrobeCard } from '@/UI/WardrobeCard';
 import styles from './WardrobeList.module.scss';
+import { Button } from '@/UI/Button';
+import { useNavigate } from 'react-router-dom';
 
 const data: ClothingItem[] = [
   {
@@ -30,13 +32,20 @@ const data: ClothingItem[] = [
 ];
 
 export const WardrobeList: FC = () => {
+  const navigate = useNavigate();
+
   return (
-    <ul className={`${styles.list} list-reset`}>
-      {data.map((item) => (
-        <li className={styles.item} key={item.id}>
-          <WardrobeCard wardrobe={item} />
-        </li>
-      ))}
-    </ul>
+    <>
+      <ul className={`${styles.list} list-reset`}>
+        {data.map((item) => (
+          <li className={styles.item} key={item.id}>
+            <WardrobeCard wardrobe={item} />
+          </li>
+        ))}
+      </ul>
+      <div className={styles.btn}>
+        <Button onClick={() => navigate('/wardrobe/add')}>Добавить вещь</Button>
+      </div>
+    </>
   );
 };
