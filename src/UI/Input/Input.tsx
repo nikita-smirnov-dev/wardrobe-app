@@ -1,21 +1,32 @@
-import type { FC } from 'react';
+import { forwardRef } from 'react';
+import type { ComponentPropsWithoutRef } from 'react';
+import type { FieldError } from 'react-hook-form';
 
 import styles from './Input.module.scss';
 
-interface InputProps {
+interface InputProps extends ComponentPropsWithoutRef<'input'> {
   children?: React.ReactNode;
-  className?: string;
-  placeholder?: string;
-  type?: string;
-  error?: undefined;
-  accept?: string;
+  error?: FieldError | undefined;
 }
 
-export const Input: FC<InputProps> = ({ children, className, ...props }) => {
-  return (
-    <div className={`${styles.wrapper} ${props.error ? 'error' : ''}`}>
-      {children}
-      <input className={`${styles.input} ${className}`} {...props} />
-    </div>
-  );
-};
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ children, className, error, ...props }, ref) => {
+    return (
+      <div className={`${styles.wrapper} ${error ? styles.error : ''}`}>
+        {children}
+
+        <input
+          ref={ref}
+          className={`${styles.input} ${className || ''}`}
+          {...props}
+        />
+
+        {error?.message && (
+          <span className={styles.errorText}>{error.message}</span>
+        )}
+      </div>
+    );
+  },
+);
+
+Input.displayName = 'Input';
