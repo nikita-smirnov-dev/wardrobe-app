@@ -1,13 +1,15 @@
 import type { FC } from 'react';
 import { ItemDetails } from '@/components/ItemDetails';
 import styles from './DetailPage.module.scss';
-import { data } from '@/components/WardrobeList/WardrobeList';
 import { useParams } from 'react-router-dom';
+import { useAppSelector } from '@/store/hooks';
 
 export const DetailPage: FC = () => {
   const { id } = useParams<{ id: string }>();
 
-  const currentItem = data.find((item) => item.id === id);
+  const currentItem = useAppSelector((state) =>
+    state.wardrobe.list.find((item) => item.id === id),
+  );
 
   if (!currentItem) {
     return <div className="container">Вещь не найдена!</div>;
