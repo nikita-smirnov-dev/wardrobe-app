@@ -77,6 +77,7 @@ export const AddItemForm: FC = () => {
             Выберите категорию
           </option>
           <option value="outerwear">Верхняя одежда</option>
+          <option value="bottoms">Нижняя одежда</option>
           <option value="shoes">Обувь</option>
           <option value="accessories">Аксессуары</option>
         </select>

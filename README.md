@@ -1,75 +1,48 @@
-# React + TypeScript + Vite
+# Приложение Цифровой гардероб (Wardrobe App)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Веб-приложение для управления личным гардеробом пользователя. Проект разработан в рамках технического задания для демонстрации навыков работы с современным фронтенд-стеком, асинхронным глобальным состоянием, валидацией форм и маршрутизацией.
 
-Currently, two official plugins are available:
+## Основной функционал
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Страница списка вещей (/wardrobe)
 
-## React Compiler
+- Эмуляция загрузки данных из API с задержкой в 1.5 секунды.
+- Отображение индикатора загрузки (Loader) во время ожидания ответа.
+- Вывод вещей в виде интерактивной сетки карточек с анимацией наведения.
+- Интерактивная кнопка для перехода на страницу добавления новой вещи.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Страница добавления вещи (/wardrobe/add)
 
-## Expanding the ESLint configuration
+- Форма ввода со следующими полями: название, категория (выпадающий список), дата добавления (календарь) и поле для загрузки файла изображения.
+- Клиентская валидация: обязательность заполнения полей названия и категории.
+- Эмуляция отправки данных на сервер с задержкой в 1.5 секунды и встроенной 10% вероятностью возникновения ошибки сервера.
+- Автоматический возврат на главную страницу при успешном сохранении и вывод тост-уведомления об успехе.
+- Вывод тост-уведомления с ошибкой при сбое эмуляции сервера.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Детальная страница вещи (/wardrobe/:id)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Отображение полной информации о выбранном элементе гардероба.
+- Удаление вещи с обязательным предварительным подтверждением через модальное диалоговое окно.
+- Перенаправление на список вещей после успешного удаления.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Технический стек
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Базовый каркас: React 19, TypeScript
+- Маршрутизация: React Router v7 (работа со стандартной историей переходов через useNavigate)
+- Глобальное состояние: Redux Toolkit (использование createAsyncThunk для асинхронных операций)
+- Работа с формами: react-hook-form (клиентская валидация, обработка событий инпутов без лишних перерисовок)
+- Стилизация: SCSS-модули с использованием глобальных переменных
+- Уведомления: react-hot-toast для вывода всплывающих сообщений
 
-```
+## Установка и запуск проекта
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Для запуска проекта на локальной машине выполните следующие команды в терминале:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. Установка всех необходимых зависимостей:
+   npm install
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+2. Запуск приложения в режиме разработки:
+   npm run dev
 
-```
+3. Сборка проекта для продакшена:
+   npm run build

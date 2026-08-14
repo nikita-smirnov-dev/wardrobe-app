@@ -26,10 +26,9 @@ export const wardrobe: ClothingItem[] = [
   },
   {
     id: '4',
-    name: 'Солнцезащитные очки',
-    category: 'Аксессуары',
-    addedAt: '05.08.2026',
-    imageUrl:
-      'https://storage-cdn10.gloria-jeans.ru/pictures/Cernye-solncezasitnye-ocki-klabmastery_BAS005477-1_01_2000Wx2000H.jpeg?q=568321',
+    name: 'Джинсы',
+    category: 'Нижняя одежда',
+    addedAt: '12.08.2026',
+    imageUrl: 'https://ir.ozone.ru/s3/multimedia-0/6591128040.jpg',
   },
 ];

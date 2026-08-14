@@ -17,6 +17,14 @@ export const DetailPage: FC = () => {
   const currentItem = list.find((item) => item.id === id);
 
   useEffect(() => {
+    if (currentItem) {
+      document.title = `${currentItem.name} | Детали`;
+    } else {
+      document.title = 'Загрузка... | Гардероб';
+    }
+  }, [currentItem]);
+
+  useEffect(() => {
     if (list.length === 0) {
       dispatch(fetchWardrobeItems());
     }

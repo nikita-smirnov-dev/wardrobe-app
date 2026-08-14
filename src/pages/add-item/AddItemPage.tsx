@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { useEffect, type FC } from 'react';
 
 import { AddItemForm } from '@/components/AddItemForm';
 import { BackButton } from '@/UI/BackButton';
@@ -6,6 +6,10 @@ import { BackButton } from '@/UI/BackButton';
 import styles from './AddItemPage.module.scss';
 
 export const AddItemPage: FC = () => {
+  useEffect(() => {
+    document.title = 'Добавить новую вещь в гардероб';
+  }, []);
+
   return (
     <section className="section-offset">
       <div className={`${styles.inner} container`}>
