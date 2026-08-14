@@ -1,19 +1,15 @@
 import type { FC } from 'react';
-import { Input } from '@/UI/Input';
-import styles from './AddItemForm.module.scss';
-import { Button } from '@/UI/Button';
+import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchAddClothingItem } from '@/store/wardrobeSlice';
-import { useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
+import { Input } from '@/UI/Input';
+import { Button } from '@/UI/Button';
 
-interface IAddItemForm {
-  name: string;
-  category: string;
-  addedAt: string;
-  image: FileList;
-}
+import styles from './AddItemForm.module.scss';
+import type { IAddItemForm } from '@/types/clothingTypes';
 
 export const AddItemForm: FC = () => {
   const navigate = useNavigate();
@@ -33,7 +29,20 @@ export const AddItemForm: FC = () => {
 
   const onSubmit = async (data: IAddItemForm) => {
     try {
-      await dispatch(fetchAddClothingItem(data)).unwrap();
+      const fotrmatteDate = data.addedAt
+        ? new Date(data.addedAt).toLocaleDateString('ru-RU')
+        : new Date().toLocaleDateString('ru-RU');
+
+      const newClothingItem = {
+        id: crypto.randomUUID(),
+        name: data.name,
+        category: data.category,
+        addedAt: fotrmatteDate,
+        imageUrl:
+          'https://storage-cdn10.gloria-jeans.ru/pictures/Cernye-solncezasitnye-ocki-klabmastery_BAS005477-1_01_2000Wx2000H.jpeg?q=568321',
+      };
+
+      await dispatch(fetchAddClothingItem(newClothingItem)).unwrap();
       toast.success('Вещь успешно добавлена в гардероб!');
       navigate('/wardrobe');
     } catch (error) {
@@ -55,12 +64,14 @@ export const AddItemForm: FC = () => {
       />
       <div className={styles.selectWrapper}>
         <select
-          {...register('category', { required: 'Категория обязательна' })}
+          {...register('category', {
+            required: 'Категория обязательна',
+            onChange: (e) => e.target.blur(),
+          })}
           name="category"
           id="select"
           className={styles.select}
           defaultValue=""
-          onChange={(e) => e.target.blur()}
         >
           <option value="" disabled>
             Выберите категорию

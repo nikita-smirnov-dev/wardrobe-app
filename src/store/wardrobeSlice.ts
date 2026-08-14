@@ -1,6 +1,7 @@
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
 import { wardrobe } from '@/data/wardrobe';
 import { type ClothingItem } from '@/types/clothingTypes';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 interface WardrobeState {
   list: ClothingItem[];
@@ -8,12 +9,7 @@ interface WardrobeState {
   error: string | null;
 }
 
-interface IAddItemForm {
-  name: string;
-  category: string;
-  addedAt: string;
-  image: FileList;
-}
+let wardrobeData = [...wardrobe];
 
 const initialState: WardrobeState = {
   list: [],
@@ -32,14 +28,14 @@ export const fetchWardrobeItems = createAsyncThunk(
         'Не удалось загрузить список гардероба. Ошибка сервера!',
       );
     } else {
-      return wardrobe;
+      return wardrobeData;
     }
   },
 );
 
 export const fetchAddClothingItem = createAsyncThunk(
   'wardrobe/fetchAddClothingItem',
-  async (data: IAddItemForm, thunkAPI) => {
+  async (newClothingItem: ClothingItem, thunkAPI) => {
     await new Promise((resolve) => setTimeout(resolve, 1500));
     const isError = Math.random() < 0.1;
 
@@ -48,16 +44,25 @@ export const fetchAddClothingItem = createAsyncThunk(
         'Не удалось сохранить вещь. Ошибка сервера!',
       );
     } else {
-      const newClothingItem: ClothingItem = {
-        id: crypto.randomUUID(),
-        name: data.name,
-        category: data.category,
-        addedAt: data.addedAt,
-        imageUrl:
-          'https://storage-cdn10.gloria-jeans.ru/pictures/Cernye-solncezasitnye-ocki-klabmastery_BAS005477-1_01_2000Wx2000H.jpeg?q=568321',
-      };
-
+      wardrobeData = [...wardrobeData, newClothingItem];
       return newClothingItem;
+    }
+  },
+);
+
+export const fetchDeleteClothingItem = createAsyncThunk(
+  'wardrobe/fetchDeleteClothingItem',
+  async (id: string, thunkAPI) => {
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    const isError = Math.random() < 0.1;
+
+    if (isError) {
+      return thunkAPI.rejectWithValue(
+        'Не удалось удалить вещь. Ошибка сервера!',
+      );
+    } else {
+      wardrobeData = wardrobeData.filter((item) => item.id !== id);
+      return id;
     }
   },
 );
@@ -65,17 +70,7 @@ export const fetchAddClothingItem = createAsyncThunk(
 const wardrobeSlice = createSlice({
   name: 'wardrobe',
   initialState,
-  reducers: {
-    addItem: (state, action) => {
-      state.list.push(action.payload);
-    },
-    deleteItem: (state, action) => {
-      return {
-        ...state,
-        list: state.list.filter((item) => item.id !== action.payload),
-      };
-    },
-  },
+  reducers: {},
 
   extraReducers: (builder) => {
     builder
@@ -103,10 +98,21 @@ const wardrobeSlice = createSlice({
       .addCase(fetchAddClothingItem.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
+      })
+
+      .addCase(fetchDeleteClothingItem.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchDeleteClothingItem.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.list = state.list.filter((item) => item.id !== action.payload);
+      })
+      .addCase(fetchDeleteClothingItem.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
       });
   },
 });
-
-export const { addItem, deleteItem } = wardrobeSlice.actions;
 
 export default wardrobeSlice.reducer;

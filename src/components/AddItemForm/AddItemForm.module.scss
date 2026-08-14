@@ -64,3 +64,13 @@
 .error {
   color: $color-error;
 }
+
+.select:has(~ .error) {
+  border-color: $color-error;
+
+  &:focus {
+    outline: none;
+    border-color: $color-error;
+    box-shadow: 0 0 0 3px rgba(255, 117, 117, 0.15);
+  }
+}

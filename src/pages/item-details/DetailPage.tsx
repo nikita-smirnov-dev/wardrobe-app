@@ -1,21 +1,35 @@
-import type { FC } from 'react';
-import { ItemDetails } from '@/components/ItemDetails';
-import styles from './DetailPage.module.scss';
+import { useEffect, type FC } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAppSelector } from '@/store/hooks';
+
+import { ItemDetails } from '@/components/ItemDetails';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { fetchWardrobeItems } from '@/store/wardrobeSlice';
+import { Loader } from '@/UI/Loader';
+import { BackButton } from '@/UI/BackButton';
+
+import styles from './DetailPage.module.scss';
 
 export const DetailPage: FC = () => {
   const { id } = useParams<{ id: string }>();
+  const { list, isLoading } = useAppSelector((state) => state.wardrobe);
+  const dispatch = useAppDispatch();
 
-  const currentItem = useAppSelector((state) =>
-    state.wardrobe.list.find((item) => item.id === id),
-  );
+  const currentItem = list.find((item) => item.id === id);
+
+  useEffect(() => {
+    if (list.length === 0) {
+      dispatch(fetchWardrobeItems());
+    }
+  }, [dispatch, list.length]);
 
   return (
     <section className="section-offset">
       <div className={`${styles.inner} container`}>
-        <h1 className={styles.title}>О Товаре</h1>
-        {currentItem ? (
+        <BackButton />
+        <h1 className={styles.title}>Полная информация</h1>
+        {isLoading ? (
+          <Loader />
+        ) : currentItem ? (
           <ItemDetails item={currentItem} />
         ) : (
           <div className={styles.info}>Вещь не найдена!</div>

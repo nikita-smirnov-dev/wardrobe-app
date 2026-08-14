@@ -1,5 +1,8 @@
 .errorBlock {
-  color: 'red';
-  text-align: 'center';
-  padding: '40px';
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: $color-error;
+  text-align: center;
+  padding: 40px;
 }

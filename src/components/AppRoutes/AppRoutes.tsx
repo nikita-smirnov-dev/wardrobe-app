@@ -5,6 +5,7 @@ import { AddItemPage } from '@/pages/add-item/AddItemPage';
 import { DetailPage } from '@/pages/item-details/DetailPage';
 
 import { MainLayout } from '@/layout/MainLayout.tsx';
+import { NotFound } from '@/pages/not-found/NotFoundPage';
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
       {
         path: 'wardrobe/:id',
         element: <DetailPage />,
+      },
+      {
+        path: '*',
+        element: <NotFound />,
       },
     ],
   },

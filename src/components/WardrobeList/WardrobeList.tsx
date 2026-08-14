@@ -1,12 +1,14 @@
 import { useEffect, type FC } from 'react';
-import { WardrobeCard } from '@/UI/WardrobeCard';
-import styles from './WardrobeList.module.scss';
-import { Button } from '@/UI/Button';
 import { Link, useNavigate } from 'react-router-dom';
+
+import { WardrobeCard } from '@/UI/WardrobeCard';
+import { Button } from '@/UI/Button';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchWardrobeItems } from '@/store/wardrobeSlice';
 import { Loader } from '@/UI/Loader';
 import { ErrorMessage } from '@/UI/ErrorMessage';
+
+import styles from './WardrobeList.module.scss';
 
 export const WardrobeList: FC = () => {
   const { list, isLoading, error } = useAppSelector((state) => state.wardrobe);
@@ -20,7 +22,7 @@ export const WardrobeList: FC = () => {
   if (isLoading) {
     return (
       <div>
-        <Loader />;
+        <Loader />
       </div>
     );
   }
