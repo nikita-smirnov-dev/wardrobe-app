@@ -11,14 +11,15 @@ export const DetailPage: FC = () => {
     state.wardrobe.list.find((item) => item.id === id),
   );
 
-  if (!currentItem) {
-    return <div className="container">Вещь не найдена!</div>;
-  }
   return (
     <section className="section-offset">
       <div className={`${styles.inner} container`}>
         <h1 className={styles.title}>О Товаре</h1>
-        <ItemDetails item={currentItem} />
+        {currentItem ? (
+          <ItemDetails item={currentItem} />
+        ) : (
+          <div className={styles.info}>Вещь не найдена!</div>
+        )}
       </div>
     </section>
   );

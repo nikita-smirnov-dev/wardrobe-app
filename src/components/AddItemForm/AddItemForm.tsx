@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchAddClothingItem } from '@/store/wardrobeSlice';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 interface IAddItemForm {
   name: string;
@@ -17,7 +18,7 @@ interface IAddItemForm {
 export const AddItemForm: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { isLoading, error } = useAppSelector((state) => state.wardrobe);
+  const { isLoading } = useAppSelector((state) => state.wardrobe);
   const {
     register,
     handleSubmit,
@@ -33,9 +34,11 @@ export const AddItemForm: FC = () => {
   const onSubmit = async (data: IAddItemForm) => {
     try {
       await dispatch(fetchAddClothingItem(data)).unwrap();
+      toast.success('Вещь успешно добавлена в гардероб!');
       navigate('/wardrobe');
     } catch (error) {
       console.error(error);
+      toast.error((error as string) || 'Произошла ошибка при сохранении');
     }
   };
 

@@ -5,6 +5,7 @@ import { Button } from '@/UI/Button';
 import { useAppDispatch } from '@/store/hooks';
 import { deleteItem } from '@/store/wardrobeSlice';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 export interface ItemDetailsProps {
   item: ClothingItem;
@@ -20,9 +21,17 @@ export const ItemDetails: FC<ItemDetailsProps> = ({ item }) => {
     );
 
     if (isConfirmed) {
-      dispatch(deleteItem(item.id));
+      setTimeout(() => {
+        const isError = Math.random() < 0.1;
 
-      navigate('/wardrobe');
+        if (isError) {
+          toast.error('Не удалось удалить вещь. Ошибка сервера');
+        } else {
+          dispatch(deleteItem(item.id));
+          toast.success(`Вещь ${item.name} успешно удалена`);
+          navigate('/wardrobe');
+        }
+      }, 1500);
     }
   };
   return (
