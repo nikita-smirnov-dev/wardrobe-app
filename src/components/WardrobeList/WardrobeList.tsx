@@ -8,7 +8,7 @@ import { fetchWardrobeItems } from '@/store/wardrobeSlice';
 import { Loader } from '@/UI/Loader';
 import { ErrorMessage } from '@/UI/ErrorMessage';
 
-import styles from './WardrobeList.module.scss';
+import styles from '@/components/WardrobeList/WardrobeList.module.scss';
 
 export const WardrobeList: FC = () => {
   const { list, isLoading, error } = useAppSelector((state) => state.wardrobe);

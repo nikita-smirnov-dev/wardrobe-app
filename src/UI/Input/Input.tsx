@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import type { ComponentPropsWithoutRef } from 'react';
 import type { FieldError } from 'react-hook-form';
 
-import styles from './Input.module.scss';
+import styles from '@/UI/Input/Input.module.scss';
 
 interface InputProps extends ComponentPropsWithoutRef<'input'> {
   children?: React.ReactNode;

@@ -8,8 +8,8 @@ import { fetchAddClothingItem } from '@/store/wardrobeSlice';
 import { Input } from '@/UI/Input';
 import { Button } from '@/UI/Button';
 
-import styles from './AddItemForm.module.scss';
 import type { IAddItemForm } from '@/types/clothingTypes';
+import styles from '@/components/AddItemForm/AddItemForm.module.scss';
 
 export const AddItemForm: FC = () => {
   const navigate = useNavigate();

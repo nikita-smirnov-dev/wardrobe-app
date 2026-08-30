@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Button } from '../../UI/Button';
 
-import styles from './NotFoundPage.module.scss';
+import styles from '@/pages/not-found/NotFoundPage.module.scss';
 
 export const NotFound: FC = () => {
   const navigate = useNavigate();

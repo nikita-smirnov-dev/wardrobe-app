@@ -7,7 +7,7 @@ import { Button } from '@/UI/Button';
 import { useAppDispatch } from '@/store/hooks';
 import { fetchDeleteClothingItem } from '@/store/wardrobeSlice';
 
-import styles from './ItemDetails.module.scss';
+import styles from '@/components/ItemDetails/ItemDetails.module.scss';
 
 export interface ItemDetailsProps {
   item: ClothingItem;

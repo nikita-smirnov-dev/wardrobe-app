@@ -1,6 +1,7 @@
 import { type FC } from 'react';
-import styles from './ErrorMessage.module.scss';
 import { Button } from '../Button';
+
+import styles from '@/UI/ErrorMessage/ErrorMessage.module.scss';
 
 interface ErrorMessageProps {
   message: string;

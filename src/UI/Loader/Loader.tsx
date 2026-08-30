@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import styles from './Loader.module.scss';
+import styles from '@/UI/Loader/Loader.module.scss';
 
 export const Loader: FC = () => {
   return (

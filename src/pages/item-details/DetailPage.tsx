@@ -7,7 +7,7 @@ import { fetchWardrobeItems } from '@/store/wardrobeSlice';
 import { Loader } from '@/UI/Loader';
 import { BackButton } from '@/UI/BackButton';
 
-import styles from './DetailPage.module.scss';
+import styles from '@/pages/item-details/DetailPage.module.scss';
 
 export const DetailPage: FC = () => {
   const { id } = useParams<{ id: string }>();

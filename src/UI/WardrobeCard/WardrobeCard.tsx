@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import type { ClothingItem } from '@/types/clothingTypes';
-import styles from './WardrobeCard.module.scss';
+import styles from '@/UI/WardrobeCard/WardrobeCard.module.scss';
 
 export interface WardrobeCardProps {
   wardrobe: ClothingItem;

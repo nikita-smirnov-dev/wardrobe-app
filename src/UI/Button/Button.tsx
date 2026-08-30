@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import styles from './Button.module.scss';
+import styles from '@/UI/Button/Button.module.scss';
 
 interface ButtonProps {
   isLoading?: boolean;

@@ -2,7 +2,7 @@ import type { FC } from 'react';
 
 import { WardrobeList } from '@/components/WardrobeList';
 
-import styles from './WardrobePage.module.scss';
+import styles from '@/pages/wardrobe/WardrobePage.module.scss';
 
 export const WardrobePage: FC = () => {
   return (

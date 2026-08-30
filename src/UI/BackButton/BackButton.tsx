@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import styles from './BackButton.module.scss';
+import styles from '@/UI/BackButton/BackButton.module.scss';
 
 interface BackButtonProps {
   className?: string;
