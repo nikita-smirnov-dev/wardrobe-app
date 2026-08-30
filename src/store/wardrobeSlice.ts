@@ -5,16 +5,24 @@ import { type ClothingItem } from '@/types/clothingTypes';
 
 interface WardrobeState {
   list: ClothingItem[];
-  isLoading: boolean;
-  error: string | null;
+  isFetchLoading: boolean;
+  fetchError: string | null;
+  isCreateLoading: boolean;
+  createError: string | null;
+  isDeleteLoading: boolean;
+  deleteError: string | null;
 }
 
 let wardrobeData = [...wardrobe];
 
 const initialState: WardrobeState = {
   list: [],
-  isLoading: false,
-  error: null,
+  isFetchLoading: false,
+  fetchError: null,
+  isCreateLoading: false,
+  createError: null,
+  isDeleteLoading: false,
+  deleteError: null,
 };
 
 export const fetchWardrobeItems = createAsyncThunk(
@@ -60,6 +68,14 @@ export const fetchDeleteClothingItem = createAsyncThunk(
       return thunkAPI.rejectWithValue(
         'Не удалось удалить вещь. Ошибка сервера!',
       );
+    }
+
+    const itemExists = wardrobeData.some((item) => item.id === id);
+
+    if (!itemExists) {
+      return thunkAPI.rejectWithValue(
+        'Вещь не найдена на сервере или уже удалена!',
+      );
     } else {
       wardrobeData = wardrobeData.filter((item) => item.id !== id);
       return id;
@@ -75,42 +91,42 @@ const wardrobeSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchWardrobeItems.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
+        state.isFetchLoading = true;
+        state.fetchError = null;
       })
       .addCase(fetchWardrobeItems.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isFetchLoading = false;
         state.list = action.payload;
       })
       .addCase(fetchWardrobeItems.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload as string;
+        state.isFetchLoading = false;
+        state.fetchError = action.payload as string;
       })
 
       .addCase(fetchAddClothingItem.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
+        state.isCreateLoading = true;
+        state.createError = null;
       })
       .addCase(fetchAddClothingItem.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isCreateLoading = false;
         state.list.push(action.payload);
       })
       .addCase(fetchAddClothingItem.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload as string;
+        state.isCreateLoading = false;
+        state.createError = action.payload as string;
       })
 
       .addCase(fetchDeleteClothingItem.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
+        state.isDeleteLoading = true;
+        state.deleteError = null;
       })
       .addCase(fetchDeleteClothingItem.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isDeleteLoading = false;
         state.list = state.list.filter((item) => item.id !== action.payload);
       })
       .addCase(fetchDeleteClothingItem.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload as string;
+        state.isDeleteLoading = false;
+        state.deleteError = action.payload as string;
       });
   },
 });

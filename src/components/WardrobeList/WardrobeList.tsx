@@ -11,7 +11,9 @@ import { ErrorMessage } from '@/UI/ErrorMessage';
 import styles from '@/components/WardrobeList/WardrobeList.module.scss';
 
 export const WardrobeList: FC = () => {
-  const { list, isLoading, error } = useAppSelector((state) => state.wardrobe);
+  const { list, isFetchLoading, fetchError } = useAppSelector(
+    (state) => state.wardrobe,
+  );
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -19,7 +21,7 @@ export const WardrobeList: FC = () => {
     dispatch(fetchWardrobeItems());
   }, [dispatch]);
 
-  if (isLoading) {
+  if (isFetchLoading) {
     return (
       <div>
         <Loader />
@@ -27,10 +29,10 @@ export const WardrobeList: FC = () => {
     );
   }
 
-  if (error) {
+  if (fetchError) {
     return (
       <ErrorMessage
-        message={error}
+        message={fetchError}
         onClick={() => dispatch(fetchWardrobeItems())}
       />
     );

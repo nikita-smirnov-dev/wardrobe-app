@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 
 import type { ClothingItem } from '@/types/clothingTypes';
 import { Button } from '@/UI/Button';
-import { useAppDispatch } from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchDeleteClothingItem } from '@/store/wardrobeSlice';
 
 import styles from '@/components/ItemDetails/ItemDetails.module.scss';
@@ -16,6 +16,7 @@ export interface ItemDetailsProps {
 
 export const ItemDetails: FC<ItemDetailsProps> = ({ item }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isDeleteLoading } = useAppSelector((state) => state.wardrobe);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -51,7 +52,7 @@ export const ItemDetails: FC<ItemDetailsProps> = ({ item }) => {
             variantAction="danger"
             onClick={removeItem}
           >
-            Да, удалить
+            {isDeleteLoading ? 'Удаление...' : 'Да, удалить'}
           </Button>
           <Button
             className={styles.cancelBtn}

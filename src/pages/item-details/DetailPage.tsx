@@ -6,13 +6,15 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchWardrobeItems } from '@/store/wardrobeSlice';
 import { Loader } from '@/UI/Loader';
 import { BackButton } from '@/UI/BackButton';
+import { ErrorMessage } from '@/UI/ErrorMessage';
 
 import styles from '@/pages/item-details/DetailPage.module.scss';
-import { ErrorMessage } from '@/UI/ErrorMessage';
 
 export const DetailPage: FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { list, isLoading, error } = useAppSelector((state) => state.wardrobe);
+  const { list, isFetchLoading, fetchError } = useAppSelector(
+    (state) => state.wardrobe,
+  );
   const dispatch = useAppDispatch();
 
   const currentItem = list.find((item) => item.id === id);
@@ -36,20 +38,20 @@ export const DetailPage: FC = () => {
       <div className={`${styles.inner} container`}>
         <BackButton />
         <h1 className={styles.title}>Полная информация</h1>
-        {isLoading && <Loader />}
+        {isFetchLoading && <Loader />}
 
-        {!isLoading && error && (
+        {!fetchError && fetchError && (
           <ErrorMessage
-            message={error}
+            message={fetchError}
             onClick={() => dispatch(fetchWardrobeItems())}
           />
         )}
 
-        {!isLoading && !error && currentItem && (
+        {!isFetchLoading && !fetchError && currentItem && (
           <ItemDetails item={currentItem} />
         )}
 
-        {!isLoading && !error && !currentItem && (
+        {!isFetchLoading && !fetchError && !currentItem && (
           <div className={styles.info}>Вещь не найдена!</div>
         )}
       </div>

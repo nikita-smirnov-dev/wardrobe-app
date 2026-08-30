@@ -14,7 +14,7 @@ import styles from '@/components/AddItemForm/AddItemForm.module.scss';
 export const AddItemForm: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { isLoading } = useAppSelector((state) => state.wardrobe);
+  const { isCreateLoading } = useAppSelector((state) => state.wardrobe);
   const {
     register,
     handleSubmit,
@@ -33,13 +33,21 @@ export const AddItemForm: FC = () => {
         ? new Date(data.addedAt).toLocaleDateString('ru-RU')
         : new Date().toLocaleDateString('ru-RU');
 
+      const file = data.image?.[0];
+
+      if (!file) {
+        toast.error('Файл изображения не найден');
+        return;
+      }
+
+      const localImageUrl = URL.createObjectURL(file);
+
       const newClothingItem = {
         id: crypto.randomUUID(),
         name: data.name,
         category: data.category,
         addedAt: fotrmatteDate,
-        imageUrl:
-          'https://storage-cdn10.gloria-jeans.ru/pictures/Cernye-solncezasitnye-ocki-klabmastery_BAS005477-1_01_2000Wx2000H.jpeg?q=568321',
+        imageUrl: localImageUrl,
       };
 
       await dispatch(fetchAddClothingItem(newClothingItem)).unwrap();
@@ -93,10 +101,17 @@ export const AddItemForm: FC = () => {
         })}
         error={errors.addedAt}
       />
-      <Input className={styles.input} type="file" accept="image/*" />
+      <Input
+        className={styles.input}
+        type="file"
+        accept="image/*"
+        {...register('image', {
+          required: 'Пожалуйста, выберите изображение',
+        })}
+      />
 
-      <Button type="submit" isLoading={isLoading}>
-        {isLoading ? 'Сохранение...' : 'Сохранить'}
+      <Button type="submit" isLoading={isCreateLoading}>
+        {isCreateLoading ? 'Сохранение...' : 'Сохранить'}
       </Button>
     </form>
   );
