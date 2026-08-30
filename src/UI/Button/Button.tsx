@@ -8,7 +8,7 @@ interface ButtonProps {
   children: React.ReactNode;
   onClick?: VoidFunction;
   type?: 'button' | 'submit' | 'reset';
-  variantAction?: 'primary' | 'secondary';
+  variantAction?: 'primary' | 'secondary' | 'danger';
 }
 
 export const Button: FC<ButtonProps> = ({

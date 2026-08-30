@@ -56,6 +56,18 @@
     }
   }
 
+  &--danger {
+    background-color: transparent;
+    border: 1px solid #e0e0e0;
+    color: $color-error;
+    padding: 12px 24px;
+
+    &:hover:not(:disabled) {
+      background-color: rgba($color-error, 0.1);
+      color: $color-error;
+    }
+  }
+
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;

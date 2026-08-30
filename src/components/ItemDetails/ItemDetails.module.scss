@@ -36,3 +36,16 @@
   font-size: 0.8rem;
   color: $color-text-muted;
 }
+
+.text {
+  margin: 0;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.actionBtns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
