@@ -8,10 +8,11 @@ import { Loader } from '@/UI/Loader';
 import { BackButton } from '@/UI/BackButton';
 
 import styles from '@/pages/item-details/DetailPage.module.scss';
+import { ErrorMessage } from '@/UI/ErrorMessage';
 
 export const DetailPage: FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { list, isLoading } = useAppSelector((state) => state.wardrobe);
+  const { list, isLoading, error } = useAppSelector((state) => state.wardrobe);
   const dispatch = useAppDispatch();
 
   const currentItem = list.find((item) => item.id === id);
@@ -35,11 +36,20 @@ export const DetailPage: FC = () => {
       <div className={`${styles.inner} container`}>
         <BackButton />
         <h1 className={styles.title}>Полная информация</h1>
-        {isLoading ? (
-          <Loader />
-        ) : currentItem ? (
+        {isLoading && <Loader />}
+
+        {!isLoading && error && (
+          <ErrorMessage
+            message={error}
+            onClick={() => dispatch(fetchWardrobeItems())}
+          />
+        )}
+
+        {!isLoading && !error && currentItem && (
           <ItemDetails item={currentItem} />
-        ) : (
+        )}
+
+        {!isLoading && !error && !currentItem && (
           <div className={styles.info}>Вещь не найдена!</div>
         )}
       </div>
